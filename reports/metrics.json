@@ -1,0 +1,53 @@
+{
+  "selected_model": "logistic_regression",
+  "cv": {
+    "logistic_regression": {
+      "roc_auc": 0.7764,
+      "pr_auc": 0.5943,
+      "brier": 0.1683,
+      "cost_per_applicant": 0.5075,
+      "threshold": 0.2
+    },
+    "lightgbm": {
+      "roc_auc": 0.7858,
+      "pr_auc": 0.5994,
+      "brier": 0.1656,
+      "cost_per_applicant": 0.5363,
+      "threshold": 0.16
+    }
+  },
+  "test": {
+    "roc_auc": 0.8063,
+    "pr_auc": 0.6397,
+    "brier": 0.1553,
+    "cost_per_applicant": 0.545,
+    "threshold": 0.2
+  },
+  "test_bayes_threshold": {
+    "roc_auc": 0.8063,
+    "pr_auc": 0.6397,
+    "brier": 0.1553,
+    "cost_per_applicant": 0.56,
+    "threshold": 0.167
+  },
+  "test_naive_0.5": {
+    "roc_auc": 0.8063,
+    "pr_auc": 0.6397,
+    "brier": 0.1553,
+    "cost_per_applicant": 0.835,
+    "threshold": 0.5
+  },
+  "baseline_approve_everyone_cost": 1.5,
+  "top_features": {
+    "checking_status": 0.0947,
+    "credit_history": 0.0298,
+    "purpose": 0.0273,
+    "duration": 0.0235,
+    "credit_amount": 0.0215,
+    "installment_commitment": 0.0157,
+    "other_parties": 0.0081,
+    "foreign_worker": 0.0054,
+    "age": 0.0038,
+    "savings_status": 0.0035
+  }
+}
