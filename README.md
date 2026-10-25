@@ -41,6 +41,26 @@ thresholding, so it is the model selected. Ranking quality and decision cost do 
 Most important features (permutation importance, drop in test ROC-AUC): `checking_status` 0.095,
 `credit_history` 0.030, `purpose` 0.027, `duration` 0.024, `credit_amount` 0.022.
 
+## Example: scoring applicants
+
+`examples/applicants.csv` holds five applicants from the held-out test split. After training:
+
+```bash
+PYTHONPATH=src python -m credit_risk.predict examples/applicants.csv
+```
+
+| checking_status | duration | credit_amount | purpose | p_bad | decision | actual outcome |
+|---|---|---|---|---|---|---|
+| 0<=X<200 | 18 | 1913 | business | 0.284 | reject | good |
+| 0<=X<200 | 12 | 1860 | used car | 0.141 | approve | good |
+| <0 | 24 | 1024 | radio/tv | 0.559 | reject | bad |
+| <0 | 18 | 3104 | business | 0.455 | reject | good |
+| 0<=X<200 | 27 | 2520 | radio/tv | 0.179 | approve | bad |
+
+(Four of the 20 input columns shown.) The rule rejects anyone above p(bad) = 0.20, so it deliberately turns away
+some good applicants (cost 1 each) to avoid approving bad ones (cost 5 each); row 5 is a miss it still makes.
+A CSV missing any required column fails with a message naming the missing columns.
+
 ## How it works
 
 1. **Data** - `credit-g` from OpenML (1000 applicants, 20 mixed numeric/categorical features, 30% bad).

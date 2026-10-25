@@ -1,0 +1,6 @@
+checking_status,duration,credit_history,purpose,credit_amount,savings_status,employment,installment_commitment,personal_status,other_parties,residence_since,property_magnitude,age,other_payment_plans,housing,existing_credits,job,num_dependents,own_telephone,foreign_worker
+0<=X<200,18,existing paid,business,1913,>=1000,<1,3,male mar/wid,none,3,real estate,36,bank,own,1,skilled,1,yes,yes
+0<=X<200,12,critical/other existing credit,used car,1860,<100,unemployed,4,male single,none,2,car,34,none,own,2,high qualif/self emp/mgmt,1,yes,yes
+<0,24,delayed previously,radio/tv,1024,<100,<1,4,male mar/wid,none,4,real estate,48,stores,own,1,skilled,1,none,yes
+<0,18,no credits/all paid,business,3104,<100,4<=X<7,3,male single,none,1,life insurance,31,bank,own,1,skilled,1,yes,yes
+0<=X<200,27,critical/other existing credit,radio/tv,2520,500<=X<1000,1<=X<4,4,male single,none,2,life insurance,23,none,own,2,unskilled resident,1,none,yes

@@ -7,6 +7,9 @@ import pandas as pd
 
 def score(df: pd.DataFrame, path: str = "artifacts/credit_model.joblib") -> pd.DataFrame:
     bundle = joblib.load(path)
+    missing = [c for c in bundle["columns"] if c not in df.columns]
+    if missing:
+        raise ValueError(f"input is missing {len(missing)} required column(s): {', '.join(missing)}")
     p = bundle["model"].predict_proba(df[bundle["columns"]])[:, 1]
     decision = ["reject" if v >= bundle["threshold"] else "approve" for v in p]
     return df.assign(p_bad=p.round(4), decision=decision)
