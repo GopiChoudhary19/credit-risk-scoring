@@ -11,7 +11,7 @@ from sklearn.inspection import permutation_importance
 from sklearn.metrics import average_precision_score, brier_score_loss, roc_auc_score, roc_curve
 from sklearn.model_selection import StratifiedKFold, cross_val_predict, train_test_split
 
-from .cost import bayes_threshold, best_threshold, expected_cost
+from .cost import bayes_threshold, best_threshold, bootstrap_cost_ci, expected_cost
 from .data import load_credit, split_columns
 from .models import MODELS, SEED
 
@@ -60,6 +60,8 @@ def main(out_dir: str = "reports", model_dir: str = "artifacts") -> dict:
         "test_naive_0.5": metrics(y_te.values, p_te, 0.5),
         "baseline_approve_everyone_cost": round(expected_cost(y_te.values, np.zeros(len(y_te)), 0.5), 4),
     }
+    # 200 test applicants is a small sample, so report how much the headline cost could move
+    report["test"].update(bootstrap_cost_ci(y_te.values, p_te, thr, baseline_threshold=0.5, seed=SEED))
     joblib.dump({"model": final, "threshold": thr, "columns": list(X.columns)}, mdir / "credit_model.joblib")
 
     imp = permutation_importance(final, X_te, y_te, scoring="roc_auc", n_repeats=10, random_state=SEED)

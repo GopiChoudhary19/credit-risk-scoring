@@ -22,3 +22,25 @@ def best_threshold(y_true: np.ndarray, proba: np.ndarray) -> tuple[float, float]
 def bayes_threshold() -> float:
     """Decision-theoretic threshold for a calibrated model: reject when p(bad) > c_fp / (c_fp + c_fn)."""
     return COST_FP / (COST_FP + COST_FN)
+
+
+def bootstrap_cost_ci(y_true: np.ndarray, proba: np.ndarray, threshold: float,
+                      baseline_threshold: float | None = None, n_boot: int = 2000,
+                      seed: int = 0) -> dict:
+    """95% bootstrap interval for the cost per applicant, and optionally for the saving over a second threshold.
+
+    Both thresholds are scored on the same resampled applicants, so the saving interval is paired.
+    """
+    y_true, proba = np.asarray(y_true), np.asarray(proba)
+    rng = np.random.default_rng(seed)
+    n = len(y_true)
+    costs, savings = np.empty(n_boot), np.empty(n_boot)
+    for b in range(n_boot):
+        ix = rng.integers(0, n, n)
+        costs[b] = expected_cost(y_true[ix], proba[ix], threshold)
+        if baseline_threshold is not None:
+            savings[b] = expected_cost(y_true[ix], proba[ix], baseline_threshold) - costs[b]
+    out = {"cost_ci95": [round(float(v), 4) for v in np.percentile(costs, [2.5, 97.5])]}
+    if baseline_threshold is not None:
+        out["saving_vs_baseline_ci95"] = [round(float(v), 4) for v in np.percentile(savings, [2.5, 97.5])]
+    return out

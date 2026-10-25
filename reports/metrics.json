@@ -9,11 +9,11 @@
       "threshold": 0.2
     },
     "lightgbm": {
-      "roc_auc": 0.7858,
-      "pr_auc": 0.5994,
+      "roc_auc": 0.7847,
+      "pr_auc": 0.5992,
       "brier": 0.1656,
-      "cost_per_applicant": 0.5363,
-      "threshold": 0.16
+      "cost_per_applicant": 0.53,
+      "threshold": 0.18
     }
   },
   "test": {
@@ -21,7 +21,15 @@
     "pr_auc": 0.6397,
     "brier": 0.1553,
     "cost_per_applicant": 0.545,
-    "threshold": 0.2
+    "threshold": 0.2,
+    "cost_ci95": [
+      0.41,
+      0.685
+    ],
+    "saving_vs_baseline_ci95": [
+      0.06,
+      0.55
+    ]
   },
   "test_bayes_threshold": {
     "roc_auc": 0.8063,

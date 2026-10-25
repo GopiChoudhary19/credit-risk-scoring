@@ -22,12 +22,16 @@ out-of-fold predictions, and reports the result once on an untouched test split.
 
 Test ROC-AUC **0.806**, PR-AUC **0.640**, Brier **0.155**.
 
+200 applicants is a small test set, so the headline number comes with a bootstrap interval (2,000 resamples):
+the tuned rule's cost is **0.545 (95% CI 0.41-0.69)**, and its saving over the naive 0.5 threshold, measured on
+the same resampled applicants, is **0.06-0.55 per applicant** - positive across the whole interval.
+
 5-fold cross-validation on the training split:
 
 | Model | ROC-AUC | PR-AUC | Brier | Cost / applicant |
 |---|---|---|---|---|
 | Logistic regression (one-hot + scaling) | 0.776 | 0.594 | 0.168 | **0.508** |
-| LightGBM (ordinal-encoded) | 0.786 | 0.599 | 0.166 | 0.536 |
+| LightGBM (ordinal-encoded) | 0.785 | 0.599 | 0.166 | 0.530 |
 
 LightGBM ranks slightly better, but logistic regression gives the lower expected cost after
 thresholding, so it is the model selected. Ranking quality and decision cost do not always agree.
